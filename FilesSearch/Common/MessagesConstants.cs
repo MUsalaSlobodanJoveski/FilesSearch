@@ -7,5 +7,7 @@
         public static readonly string SEARCHING_FOR = "Searching for : ";
 
         public static readonly string FILE_NAME = "File : ";
+
+        public static readonly string DOTS_3 = "...";
     }
 }

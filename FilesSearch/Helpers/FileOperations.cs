@@ -5,7 +5,7 @@ using System.IO;
 
 namespace FilesSearch.Helpers
 {
-    public static class FileManipulation
+    public static class FileOperations
     {
         public static ExplorerModel DirFileList(string realPath)
         {

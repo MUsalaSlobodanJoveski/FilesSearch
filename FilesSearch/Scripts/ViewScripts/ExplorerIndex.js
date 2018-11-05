@@ -1,7 +1,6 @@
 ﻿$(function () {
     var chat = $.connection.searchHub;
     chat.client.broadcastMessage = function (name, message) {
-        var encodedName = $('<div />').text(name).html();
         var encodedMsg = $('<div />').text(message).html();
         var arrMsg = JSON.parse(encodedMsg);
         arrMsg.forEach(function (item) {

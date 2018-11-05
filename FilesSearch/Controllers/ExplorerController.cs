@@ -26,7 +26,7 @@ namespace FilesSearch.Controllers
                     Response.Redirect(PathConstants.EXPLORER_PATH + path + PathConstants.PATH_BACKSLASH);
                 }
 
-                Models.ExplorerModel explorerModel = FileManipulation.DirFileList(realPath);
+                Models.ExplorerModel explorerModel = FileOperations.DirFileList(realPath);
                 return View(explorerModel);
             }
             else

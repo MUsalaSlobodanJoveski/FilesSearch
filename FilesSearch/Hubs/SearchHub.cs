@@ -13,19 +13,19 @@ namespace FilesSearch.Hubs
         public void Send(string dirPath, string searchItem)
         {
             dirPath = HttpUtility.UrlDecode(dirPath);
-            IEnumerable<string> fileList = Directory.EnumerateFiles(dirPath);
             List<SignalRResult> results = new List<SignalRResult>
             {
                 new SignalRResult { ItemValue = MessagesConstants.SEARCHING_FOR + searchItem}
             };
 
-            FilesSearch(dirPath, searchItem, fileList, ref results);
+            FilesSearch(dirPath, searchItem, ref results);
 
             Clients.All.broadcastMessage(dirPath, JsonConvert.SerializeObject(results));
         }
 
-        private void FilesSearch(string dirPath, string searchItem, IEnumerable<string> fileList, ref List<SignalRResult> results)
+        private void FilesSearch(string dirPath, string searchItem, ref List<SignalRResult> results)
         {
+            IEnumerable<string> fileList = Directory.EnumerateFiles(dirPath);
             foreach (string fileItem in fileList)
             {
                 int counter = 1;
@@ -52,7 +52,7 @@ namespace FilesSearch.Hubs
                             CommonConstants.ROW,
                             counter.ToString(),
                             CommonConstants.COLON,
-                            line.Substring(0, 100))
+                            line.Length < 100 ? line : line.Substring(0, 100) + MessagesConstants.DOTS_3)
                         });
                     }
 
