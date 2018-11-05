@@ -14,6 +14,7 @@ namespace FilesSearch.Helpers
             IEnumerable<string> dirList = Directory.EnumerateDirectories(realPath);
             foreach (string dir in dirList)
             {
+                // list of folders
                 DirectoryInfo d = new DirectoryInfo(dir);
                 DirModel dirModel = new DirModel
                 {
@@ -26,6 +27,7 @@ namespace FilesSearch.Helpers
             IEnumerable<string> fileList = Directory.EnumerateFiles(realPath);
             foreach (string file in fileList)
             {
+                // list of files
                 FileInfo f = new FileInfo(file);
                 FileModel fileModel = new FileModel
                 {

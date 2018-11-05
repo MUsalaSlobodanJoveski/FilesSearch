@@ -11,15 +11,16 @@ namespace FilesSearch.Controllers
     {
         public ActionResult Index(string path)
         {
-            string realPath;
-            realPath = Server.MapPath(PathConstants.SEARCH_FILES_ROOT + path);
+            string realPath = Server.MapPath(PathConstants.SEARCH_FILES_ROOT + path);
 
             if (System.IO.File.Exists(realPath))
             {
+                // the path is of type file
                 return base.File(realPath, PathConstants.CONTENT_OCTET_STREAM);
             }
             else if (Directory.Exists(realPath))
             {
+                // search in the folder
                 Uri url = Request.Url;
                 if (url.ToString().Last() != PathConstants.PATH_BACKSLASH_CHAR)
                 {
@@ -31,6 +32,7 @@ namespace FilesSearch.Controllers
             }
             else
             {
+                // path isn't found
                 return Content(path + MessagesConstants.PATH_ISNT_VALID);
             }
         }

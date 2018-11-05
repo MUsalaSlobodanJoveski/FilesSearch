@@ -28,12 +28,13 @@ namespace FilesSearch.Hubs
             IEnumerable<string> fileList = Directory.EnumerateFiles(dirPath);
             foreach (string fileItem in fileList)
             {
+                // row counter
                 int counter = 1;
-                string line;
                 StreamReader file = new StreamReader(string.Format("{0}{1}{2}",
                     dirPath,
                     PathConstants.PATH_BACKSLASH,
                     Path.GetFileName(fileItem)));
+                // add the current filename to the info list
                 results.Add(new SignalRResult
                 {
                     ItemValue = string.Format("{0}{1}{2}{3}",
@@ -42,6 +43,8 @@ namespace FilesSearch.Hubs
                     PathConstants.PATH_BACKSLASH,
                     Path.GetFileName(fileItem))
                 });
+                // search in all rows and take first 100 characters
+                string line;
                 while ((line = file.ReadLine()) != null)
                 {
                     if (line.Contains(searchItem))
