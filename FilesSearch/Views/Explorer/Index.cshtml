@@ -1,0 +1,50 @@
+﻿@using FilesSearch.Common
+
+<link href="@Url.Content("~/Styles/ExplorerIndex.css")" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Files Search";
+}
+@{Uri uri = Request.Url;}
+
+<h2>@Server.UrlDecode(uri.Segments.Last())</h2>
+
+@if (uri.AbsolutePath.ToLower() != "/explorer/")
+{
+    <a title="Parent"
+       href="@uri.AbsoluteUri.Remove(uri.AbsoluteUri.Length - uri.Segments.Last().Length)">
+        <img src="~/Images/up-32.ico" alt="Up" style="width: 20px; height: 20px; border: none" />
+    </a>
+}
+@if (Model.fileModelList.Count > 0)
+{
+    <div class="explorer">
+        <input id="message" type="text" />
+        <input id="sendmessage" type="button" value="Send" />
+        <input id="displayname" type="hidden" value="@Server.MapPath(PathConstants.SEARCH_FILES_ROOT + uri.AbsolutePath.ToLower().Replace(PathConstants.EXPLORER_PATH, string.Empty))" />
+        <ul id="discussion"></ul>
+    </div>
+}
+<ul>
+    @foreach (FilesSearch.Models.DirModel dir in Model.dirModelList)
+    {
+        <li>
+            <img src="~/Images/TFolder_Green.png" alt="Folder Logo" align="top" style="width: 20px;
+                height: 20px; border: none" />
+            <a href="@dir.DirName/" title="@dir.DirName">@dir.DirName</a>
+        </li>
+    }
+    @foreach (FilesSearch.Models.FileModel file in Model.fileModelList)
+    {
+        <li>
+            @file.FileName. . . . . . @file.FileSizeText. . . . . . @file.FileAccessed
+        </li>
+    }
+</ul>
+
+@section scripts {
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/ViewScripts/ExplorerIndex.js"></script>
+}
